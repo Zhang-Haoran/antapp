@@ -179,7 +179,7 @@ const TableList: React.FC = () => {
         })}
         actionRef={actionRef}
         rowKey="id"
-        search={false}
+        search={{labelWidth:120}}
         toolBarRender={() => [
           <Button
             type="primary"
