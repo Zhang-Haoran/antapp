@@ -13,7 +13,7 @@ export async function rule(
   },
   options?: { [key: string]: any },
 ) {
-  return request<API.RuleList>('/teachers', {
+  return request<API.RuleList>('/api/rule', {
     method: 'GET',
     params: {
       ...params,
@@ -45,3 +45,17 @@ export async function removeRule(options?: { [key: string]: any }) {
     ...(options || {}),
   });
 }
+
+/** Get Teacher from server*/
+export async function getTeachers(
+  options?: { [key: string]: any },
+) {
+  return request<API.RuleList>('/teachers', {
+    method: 'GET',
+    ...(options || {}),
+  })
+}
+
+
+
+

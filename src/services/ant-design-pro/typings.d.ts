@@ -54,6 +54,8 @@ declare namespace API {
     date?:string;
     teacher?:number,
     teacher_name?:string;
+    weekly_expected_hours?:number,
+    work_base?:string
   };
 
   type RuleList = {

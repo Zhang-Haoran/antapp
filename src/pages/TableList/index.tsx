@@ -10,7 +10,7 @@ import type { ProDescriptionsItemProps } from '@ant-design/pro-descriptions';
 import ProDescriptions from '@ant-design/pro-descriptions';
 import type { FormValueType } from './components/UpdateForm';
 import UpdateForm from './components/UpdateForm';
-import { rule, addRule, updateRule, removeRule } from '@/services/ant-design-pro/rule';
+import {addRule, updateRule, removeRule, getTeachers} from '@/services/ant-design-pro/rule';
 
 /**
  * 添加节点
@@ -232,7 +232,17 @@ const TableList: React.FC = () => {
             <PlusOutlined /> <FormattedMessage id="pages.searchTable.new" defaultMessage="新建" />
           </Button>,
         ]}
-        request={rule}
+        // 在获取后端响应之后处理为ProTable可利用的数据结构
+        request={async ()=> {
+          const data = new Array();
+          await getTeachers().then(value => {
+            for(let i = 0; i < value.length;i+=1){
+              data.push(value[i]);
+            }
+          })
+          console.log(data)
+          return {data,success:true}
+        }}
         columns={columns}
         rowSelection={{
           onChange: (_, selectedRows) => {
