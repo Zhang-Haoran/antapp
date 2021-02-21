@@ -69,5 +69,19 @@ export default {
   'pages.searchTable.name':'Name',
   'pages.searchTable.id':'Id',
   'pages.searchTable.work_base':'Work base',
-  'pages.searchTable.edit':'Edit'
+  'pages.searchTable.edit':'Edit',
+  'pages.courseTable.studio':'Studio',
+  'pages.courseTable.uniform':'Uniform',
+  'pages.courseTable.endTime':'EndTime',
+  'pages.courseTable.startTime':'StartTime',
+  'pages.courseTable.date':'Date',
+  'pages.courseTable.name':'Name',
+  'pages.courseTable.id':'Id',
+  'pages.timeRecordTable.teacher':'Teacher',
+  'pages.timeRecordTable.endTime':'EndTime',
+  'pages.timeRecordTable.startTime':'StartTime',
+  'pages.timeRecordTable.date':'Date',
+  'pages.timeRecordTable.name':'Name',
+  'pages.timeRecordTable.id':'Id'
+
 };

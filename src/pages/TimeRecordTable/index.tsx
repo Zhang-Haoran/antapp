@@ -8,10 +8,12 @@ import ProTable from '@ant-design/pro-table';
 import { ModalForm, ProFormText } from '@ant-design/pro-form';
 import type { ProDescriptionsItemProps } from '@ant-design/pro-descriptions';
 import ProDescriptions from '@ant-design/pro-descriptions';
-import type { FormValueType } from './components/UpdateForm';
-import UpdateForm from './components/UpdateForm';
-import {updateRule, getTeachers, addTeacher, removeTeacher, updateTeacher} from '@/services/ant-design-pro/rule';
-import EditForm from "@/pages/TableList/components/EditForm";
+import type { FormValueType } from './components/EditForm';
+import {
+  addTimeRecords,
+  updateTimeRecords, removeTimeRecords, getTimeRecords
+} from '@/services/ant-design-pro/rule';
+import EditForm from "@/pages/TeacherTable/components/EditForm";
 
 /**
  * 添加节点
@@ -21,7 +23,7 @@ import EditForm from "@/pages/TableList/components/EditForm";
 const handleAdd = async (fields: API.RuleListItem) => {
   const hide = message.loading('正在添加');
   try {
-    await addTeacher({ ...fields });
+    await addTimeRecords({ ...fields });
     hide();
     message.success('添加成功');
     return true;
@@ -40,11 +42,12 @@ const handleAdd = async (fields: API.RuleListItem) => {
 const handleUpdate = async (fields: FormValueType) => {
   const hide = message.loading('正在配置');
   try {
-    await updateTeacher({
-      name: fields.name,
-      weekly_expected_hours: fields.weekly_expected_hours,
+    await updateTimeRecords({
+      teacher_name: fields.teacher_name,
+      startTime: fields.startTime,
       id: fields.id,
-      work_base:fields.work_base
+      endTime:fields.endTime,
+      date:fields.date,
     });
     hide();
 
@@ -66,7 +69,7 @@ const handleRemove = async (selectedRows: API.RuleListItem[]) => {
   const hide = message.loading('正在删除');
   if (!selectedRows) return true;
   try {
-    await removeTeacher({
+    await removeTimeRecords({
       id: selectedRows.map((row) => row.id),
     });
     hide();
@@ -98,19 +101,21 @@ const TableList: React.FC = () => {
     {
       title: (
         <FormattedMessage
-          id="pages.searchTable.id"
+          id="pages.timeRecordTable.id"
           defaultMessage="id"
         />
       ),
       hideInTable:true,
+      hideInSearch:true,
+      hideInDescriptions:true,
       dataIndex: 'id',
       tip: '规则名称是唯一的 key',
       sorter:true
 
     },
     {
-      title: <FormattedMessage id="pages.searchTable.name" defaultMessage="name" />,
-      dataIndex: 'name',
+      title: <FormattedMessage id="pages.timeRecordTable.name" defaultMessage="name" />,
+      dataIndex: 'teacher_name',
       sorter:true,
       render: (dom, entity) => {
         return (
@@ -126,14 +131,25 @@ const TableList: React.FC = () => {
       },
     },
     {
-      title: <FormattedMessage id="pages.searchTable.weekly_expected_hours" defaultMessage="weekly_expected_hours" />,
-      dataIndex: 'weekly_expected_hours',
+      title: <FormattedMessage id="pages.timeRecordTable.date" defaultMessage="date" />,
+      dataIndex: 'date',
       sorter:true
     },
     {
-      title: <FormattedMessage id="pages.searchTable.work_base" defaultMessage="work_base" />,
-      dataIndex: 'work_base',
+      title: <FormattedMessage id="pages.timeRecordTable.startTime" defaultMessage="startTime" />,
+      dataIndex: 'startTime',
       sorter:true
+    },
+    {
+      title: <FormattedMessage id="pages.timeRecordTable.endTime" defaultMessage="endTime" />,
+      dataIndex: 'endTime',
+      sorter:true
+    },
+    {
+      title: <FormattedMessage id="pages.timeRecordTable.teacher" defaultMessage="teacher" />,
+      dataIndex: 'teacher',
+      sorter:true,
+      hideInTable:true
     },
     // {
     //   title: <FormattedMessage id="pages.searchTable.titleCallNo" defaultMessage="服务调用次数" />,
@@ -230,9 +246,7 @@ const TableList: React.FC = () => {
         })}
         actionRef={actionRef}
         rowKey="id"
-        search={{
-          labelWidth: 120,
-        }}
+        search={false}
         toolBarRender={() => [
           <Button
             type="primary"
@@ -247,7 +261,7 @@ const TableList: React.FC = () => {
         // 在获取后端响应之后处理为ProTable可利用的数据结构
         request={async ()=> {
           const data = new Array();
-          await getTeachers().then(value => {
+          await getTimeRecords().then(value => {
             for(let i = 0; i < value.length;i+=1){
               data.push(value[i]);
             }
@@ -405,15 +419,15 @@ const TableList: React.FC = () => {
         }}
         closable={false}
       >
-        {currentRow?.name && (
+        {currentRow?.teacher_name && (
           <ProDescriptions<API.RuleListItem>
             column={2}
-            title={currentRow?.name}
+            title={currentRow?.teacher_name}
             request={async () => ({
               data: currentRow || {},
             })}
             params={{
-              id: currentRow?.name,
+              id: currentRow?.teacher_name,
             }}
             columns={columns as ProDescriptionsItemProps<API.RuleListItem>[]}
           />

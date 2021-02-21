@@ -15,36 +15,48 @@
       },
     ],
   },
+  // {
+  //   path: '/welcome',
+  //   name: 'welcome',
+  //   icon: 'smile',
+  //   component: './Welcome',
+  // },
+  // {
+  //   path: '/admin',
+  //   name: 'admin',
+  //   icon: 'crown',
+  //   access: 'canAdmin',
+  //   component: './Admin',
+  //   routes: [
+  //     {
+  //       path: '/admin/sub-page',
+  //       name: 'sub-page',
+  //       icon: 'smile',
+  //       component: './Welcome',
+  //     },
+  //   ],
+  // },
   {
-    path: '/welcome',
-    name: 'welcome',
-    icon: 'smile',
-    component: './Welcome',
-  },
-  {
-    path: '/admin',
-    name: 'admin',
-    icon: 'crown',
-    access: 'canAdmin',
-    component: './Admin',
-    routes: [
-      {
-        path: '/admin/sub-page',
-        name: 'sub-page',
-        icon: 'smile',
-        component: './Welcome',
-      },
-    ],
-  },
-  {
-    name: 'list.table-list',
+    name: 'Teacher Table',
     icon: 'table',
-    path: '/list',
-    component: './TableList',
+    path: '/teacherTable',
+    component: './TeacherTable',
+  },
+  {
+    name: 'TimeRecord Table',
+    icon: 'table',
+    path: '/timeRecordTable',
+    component: './TimeRecordTable',
+  },
+  {
+    name: 'Course Table',
+    icon: 'table',
+    path: '/courseTable',
+    component: './CourseTable',
   },
   {
     path: '/',
-    redirect: '/welcome',
+    redirect: '/TeacherTable',
   },
   {
     component: './404',

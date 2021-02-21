@@ -89,3 +89,90 @@ export async function updateTeacher(options?: { [key: string]: any }) {
   });
 }
 
+/** Get Teacher from server*/
+export async function getTimeRecords(
+  options?: { [key: string]: any },
+) {
+  return request<API.RuleList>('/timerecords', {
+    method: 'GET',
+    ...(options || {}),
+  })
+}
+/** Post Teacher from server*/
+export async function addTimeRecords(options?: { [key: string]: any }) {
+  console.log(options)
+  return request<API.RuleListItem>('/timerecords', {
+    method: 'POST',
+    body:JSON.stringify(options),
+    headers: {
+      'Content-Type':'application/json'
+    },
+  });
+}
+
+/** Remove Teacher from server */
+export async function removeTimeRecords(options?: { [key: string]: any }) {
+  return request<Record<string, any>>(`/timerecords/${options.id}`, {
+    method: 'DELETE',
+    body:JSON.stringify(options),
+    headers: {
+      'Content-Type':'application/json'
+    },
+  });
+}
+
+/** Update Teacher from server */
+export async function updateTimeRecords(options?: { [key: string]: any }) {
+  return request<API.RuleListItem>(`/timerecords/${options.id}`, {
+    method: 'PUT',
+    body:JSON.stringify(options),
+    headers: {
+      'Content-Type':'application/json'
+    },
+  });
+}
+
+/** Get Teacher from server*/
+export async function getCourses(
+  options?: { [key: string]: any },
+) {
+  return request<API.RuleList>('/classes', {
+    method: 'GET',
+    ...(options || {}),
+  })
+}
+/** Post Teacher from server*/
+export async function addCourses(options?: { [key: string]: any }) {
+  console.log(options)
+  return request<API.RuleListItem>('/classes', {
+    method: 'POST',
+    body:JSON.stringify(options),
+    headers: {
+      'Content-Type':'application/json'
+    },
+  });
+}
+
+/** Remove Teacher from server */
+export async function removeCourses(options?: { [key: string]: any }) {
+  return request<Record<string, any>>(`/classes/${options.id}`, {
+    method: 'DELETE',
+    body:JSON.stringify(options),
+    headers: {
+      'Content-Type':'application/json'
+    },
+  });
+}
+
+/** Update Teacher from server */
+export async function updateCourses(options?: { [key: string]: any }) {
+  return request<API.RuleListItem>(`/classes/${options.id}`, {
+    method: 'PUT',
+    body:JSON.stringify(options),
+    headers: {
+      'Content-Type':'application/json'
+    },
+  });
+}
+
+
