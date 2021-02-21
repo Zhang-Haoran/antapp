@@ -10,7 +10,8 @@ import type { ProDescriptionsItemProps } from '@ant-design/pro-descriptions';
 import ProDescriptions from '@ant-design/pro-descriptions';
 import type { FormValueType } from './components/UpdateForm';
 import UpdateForm from './components/UpdateForm';
-import {updateRule, removeRule, getTeachers, addTeacher} from '@/services/ant-design-pro/rule';
+import {updateRule, getTeachers, addTeacher, removeTeacher, updateTeacher} from '@/services/ant-design-pro/rule';
+import EditForm from "@/pages/TableList/components/EditForm";
 
 /**
  * 添加节点
@@ -39,10 +40,11 @@ const handleAdd = async (fields: API.RuleListItem) => {
 const handleUpdate = async (fields: FormValueType) => {
   const hide = message.loading('正在配置');
   try {
-    await updateRule({
+    await updateTeacher({
       name: fields.name,
-      desc: fields.desc,
-      key: fields.key,
+      weekly_expected_hours: fields.weekly_expected_hours,
+      id: fields.id,
+      work_base:fields.work_base
     });
     hide();
 
@@ -64,8 +66,8 @@ const handleRemove = async (selectedRows: API.RuleListItem[]) => {
   const hide = message.loading('正在删除');
   if (!selectedRows) return true;
   try {
-    await removeRule({
-      key: selectedRows.map((row) => row.key),
+    await removeTeacher({
+      id: selectedRows.map((row) => row.id),
     });
     hide();
     message.success('删除成功，即将刷新');
@@ -103,11 +105,13 @@ const TableList: React.FC = () => {
       hideInTable:true,
       dataIndex: 'id',
       tip: '规则名称是唯一的 key',
+      sorter:true
 
     },
     {
       title: <FormattedMessage id="pages.searchTable.name" defaultMessage="name" />,
       dataIndex: 'name',
+      sorter:true,
       render: (dom, entity) => {
         return (
           <a
@@ -124,10 +128,12 @@ const TableList: React.FC = () => {
     {
       title: <FormattedMessage id="pages.searchTable.weekly_expected_hours" defaultMessage="weekly_expected_hours" />,
       dataIndex: 'weekly_expected_hours',
+      sorter:true
     },
     {
       title: <FormattedMessage id="pages.searchTable.work_base" defaultMessage="work_base" />,
       dataIndex: 'work_base',
+      sorter:true
     },
     // {
     //   title: <FormattedMessage id="pages.searchTable.titleCallNo" defaultMessage="服务调用次数" />,
@@ -223,7 +229,7 @@ const TableList: React.FC = () => {
           defaultMessage: '查询表格',
         })}
         actionRef={actionRef}
-        rowKey="key"
+        rowKey="id"
         search={{
           labelWidth: 120,
         }}
@@ -371,7 +377,7 @@ const TableList: React.FC = () => {
           name="work_base"
         />
       </ModalForm>
-      <UpdateForm
+      <EditForm
         onSubmit={async (value) => {
           const success = await handleUpdate(value);
           if (success) {

@@ -67,5 +67,25 @@ export async function addTeacher(options?: { [key: string]: any }) {
   });
 }
 
+/** Remove Teacher from server */
+export async function removeTeacher(options?: { [key: string]: any }) {
+  return request<Record<string, any>>(`/teachers/${options.id}`, {
+    method: 'DELETE',
+    body:JSON.stringify(options),
+    headers: {
+      'Content-Type':'application/json'
+    },
+  });
+}
 
+/** Update Teacher from server */
+export async function updateTeacher(options?: { [key: string]: any }) {
+  return request<API.RuleListItem>(`/teachers/${options.id}`, {
+    method: 'PUT',
+    body:JSON.stringify(options),
+    headers: {
+      'Content-Type':'application/json'
+    },
+  });
+}
 
