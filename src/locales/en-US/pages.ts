@@ -65,4 +65,8 @@ export default {
   'pages.searchTable.tenThousand': '0000',
   'pages.searchTable.batchDeletion': 'bacth deletion',
   'pages.searchTable.batchApproval': 'batch approval',
+  'pages.searchTable.weekly_expected_hours':'Weekly Hours',
+  'pages.searchTable.name':'Name',
+  'pages.searchTable.id':'Id',
+  'pages.searchTable.work_base':'Work base'
 };
