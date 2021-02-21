@@ -55,7 +55,17 @@ export async function getTeachers(
     ...(options || {}),
   })
 }
-
+/** Post Teacher from server*/
+export async function addTeacher(options?: { [key: string]: any }) {
+  console.log(options)
+  return request<API.RuleListItem>('/teachers', {
+    method: 'POST',
+    body:JSON.stringify(options),
+    headers: {
+      'Content-Type':'application/json'
+    },
+  });
+}
 
 
 

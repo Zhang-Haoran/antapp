@@ -39,7 +39,6 @@ declare namespace API {
     disabled?: boolean;
     href?: string;
     avatar?: string;
-    name?: string;
     owner?: string;
     desc?: string;
     callNo?: number;

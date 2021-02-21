@@ -139,16 +139,5 @@ const errorHandler = (error: ResponseError) => {
 // https://umijs.org/zh-CN/plugins/plugin-request
 export const request: RequestConfig = {
   errorHandler,
-  prefix:'http://localhost:8080',
-  errorConfig: {
-    adaptor: (resData) => {
-      // resData 是我们自己的数据
-      return {
-        ...resData,
-        total: resData.sum,
-        success: resData.ok,
-        errorMessage: resData.message,
-      };
-    },
-  },
+  prefix:'http://localhost:8080'
 };

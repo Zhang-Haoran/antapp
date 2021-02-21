@@ -68,5 +68,6 @@ export default {
   'pages.searchTable.weekly_expected_hours':'Weekly Hours',
   'pages.searchTable.name':'Name',
   'pages.searchTable.id':'Id',
-  'pages.searchTable.work_base':'Work base'
+  'pages.searchTable.work_base':'Work base',
+  'pages.searchTable.edit':'Edit'
 };

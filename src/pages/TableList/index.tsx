@@ -1,16 +1,16 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { Button, message, Input, Drawer } from 'antd';
+import { Button, message, Drawer } from 'antd';
 import React, { useState, useRef } from 'react';
 import { useIntl, FormattedMessage } from 'umi';
 import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import { ModalForm, ProFormText, ProFormTextArea } from '@ant-design/pro-form';
+import { ModalForm, ProFormText } from '@ant-design/pro-form';
 import type { ProDescriptionsItemProps } from '@ant-design/pro-descriptions';
 import ProDescriptions from '@ant-design/pro-descriptions';
 import type { FormValueType } from './components/UpdateForm';
 import UpdateForm from './components/UpdateForm';
-import {addRule, updateRule, removeRule, getTeachers} from '@/services/ant-design-pro/rule';
+import {updateRule, removeRule, getTeachers, addTeacher} from '@/services/ant-design-pro/rule';
 
 /**
  * 添加节点
@@ -20,7 +20,7 @@ import {addRule, updateRule, removeRule, getTeachers} from '@/services/ant-desig
 const handleAdd = async (fields: API.RuleListItem) => {
   const hide = message.loading('正在添加');
   try {
-    await addRule({ ...fields });
+    await addTeacher({ ...fields });
     hide();
     message.success('添加成功');
     return true;
@@ -100,8 +100,14 @@ const TableList: React.FC = () => {
           defaultMessage="id"
         />
       ),
+      hideInTable:true,
       dataIndex: 'id',
       tip: '规则名称是唯一的 key',
+
+    },
+    {
+      title: <FormattedMessage id="pages.searchTable.name" defaultMessage="name" />,
+      dataIndex: 'name',
       render: (dom, entity) => {
         return (
           <a
@@ -114,10 +120,6 @@ const TableList: React.FC = () => {
           </a>
         );
       },
-    },
-    {
-      title: <FormattedMessage id="pages.searchTable.name" defaultMessage="name" />,
-      dataIndex: 'name',
     },
     {
       title: <FormattedMessage id="pages.searchTable.weekly_expected_hours" defaultMessage="weekly_expected_hours" />,
@@ -196,7 +198,7 @@ const TableList: React.FC = () => {
     //   },
     // },
     {
-      title: <FormattedMessage id="pages.searchTable.titleOption" defaultMessage="操作" />,
+      title: <FormattedMessage id="pages.searchTable.titleOption" defaultMessage="Edit" />,
       dataIndex: 'option',
       valueType: 'option',
       render: (_, record) => [
@@ -207,10 +209,7 @@ const TableList: React.FC = () => {
             setCurrentRow(record);
           }}
         >
-          <FormattedMessage id="pages.searchTable.config" defaultMessage="配置" />
-        </a>,
-        <a key="subscribeAlert" href="https://procomponents.ant.design/">
-          <FormattedMessage id="pages.searchTable.subscribeAlert" defaultMessage="订阅警报" />
+          <FormattedMessage id="pages.searchTable.edit" defaultMessage="Edit" />
         </a>,
       ],
     },
@@ -319,10 +318,58 @@ const TableList: React.FC = () => {
               ),
             },
           ]}
+          label="Id"
+          width="md"
+          name="id"
+        />
+        <ProFormText
+          rules={[
+            {
+              required: true,
+              message: (
+                <FormattedMessage
+                  id="pages.searchTable.ruleName"
+                  defaultMessage="规则名称为必填项"
+                />
+              ),
+            },
+          ]}
+          label="Name"
           width="md"
           name="name"
         />
-        <ProFormTextArea width="md" name="desc" />
+        <ProFormText
+          rules={[
+            {
+              required: true,
+              message: (
+                <FormattedMessage
+                  id="pages.searchTable.ruleName"
+                  defaultMessage="规则名称为必填项"
+                />
+              ),
+            },
+          ]}
+          label="Weekly Hours"
+          width="md"
+          name="weekly_expected_hours"
+        />
+        <ProFormText
+          rules={[
+            {
+              required: true,
+              message: (
+                <FormattedMessage
+                  id="pages.searchTable.ruleName"
+                  defaultMessage="规则名称为必填项"
+                />
+              ),
+            },
+          ]}
+          label="Work Base"
+          width="md"
+          name="work_base"
+        />
       </ModalForm>
       <UpdateForm
         onSubmit={async (value) => {
