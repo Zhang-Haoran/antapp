@@ -151,74 +151,6 @@ const TableList: React.FC = () => {
       sorter:true,
       hideInTable:true
     },
-    // {
-    //   title: <FormattedMessage id="pages.searchTable.titleCallNo" defaultMessage="服务调用次数" />,
-    //   dataIndex: 'callNo',
-    //   sorter: true,
-    //   hideInForm: true,
-    //   renderText: (val: string) =>
-    //     `${val}${intl.formatMessage({
-    //       id: 'pages.searchTable.tenThousand',
-    //       defaultMessage: ' 万 ',
-    //     })}`,
-    // },
-    // {
-    //   title: <FormattedMessage id="pages.searchTable.titleStatus" defaultMessage="状态" />,
-    //   dataIndex: 'status',
-    //   hideInForm: true,
-    //   valueEnum: {
-    //     0: {
-    //       text: (
-    //         <FormattedMessage id="pages.searchTable.nameStatus.default" defaultMessage="关闭" />
-    //       ),
-    //       status: 'Default',
-    //     },
-    //     1: {
-    //       text: (
-    //         <FormattedMessage id="pages.searchTable.nameStatus.running" defaultMessage="运行中" />
-    //       ),
-    //       status: 'Processing',
-    //     },
-    //     2: {
-    //       text: (
-    //         <FormattedMessage id="pages.searchTable.nameStatus.online" defaultMessage="已上线" />
-    //       ),
-    //       status: 'Success',
-    //     },
-    //     3: {
-    //       text: (
-    //         <FormattedMessage id="pages.searchTable.nameStatus.abnormal" defaultMessage="异常" />
-    //       ),
-    //       status: 'Error',
-    //     },
-    //   },
-    // },
-    // {
-    //   title: (
-    //     <FormattedMessage id="pages.searchTable.titleUpdatedAt" defaultMessage="上次调度时间" />
-    //   ),
-    //   sorter: true,
-    //   dataIndex: 'updatedAt',
-    //   valueType: 'dateTime',
-    //   renderFormItem: (item, { defaultRender, ...rest }, form) => {
-    //     const status = form.getFieldValue('status');
-    //     if (`${status}` === '0') {
-    //       return false;
-    //     }
-    //     if (`${status}` === '3') {
-    //       return (
-    //         <Input
-    //           {...rest}
-    //           placeholder={intl.formatMessage({
-    //             id: 'pages.searchTable.exception',
-    //             defaultMessage: '请输入异常原因！',
-    //           })}
-    //         />
-    //       );
-    //     }
-    //     return defaultRender(item);
-    //   },
-    // },
     {
       title: <FormattedMessage id="pages.searchTable.titleOption" defaultMessage="Edit" />,
       dataIndex: 'option',
@@ -236,6 +168,7 @@ const TableList: React.FC = () => {
       ],
     },
   ];
+
 
   return (
     <PageContainer>
@@ -259,14 +192,17 @@ const TableList: React.FC = () => {
           </Button>,
         ]}
         // 在获取后端响应之后处理为ProTable可利用的数据结构
+
         request={async ()=> {
           const data = new Array();
+          let total = 0;
           await getTimeRecords().then(value => {
             for(let i = 0; i < value.length;i+=1){
               data.push(value[i]);
             }
+            total = value.length -1;
           })
-          return {data,success:true}
+          return {data,success:true,total}
         }}
         columns={columns}
         rowSelection={{
